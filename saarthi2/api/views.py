@@ -93,10 +93,22 @@ def verify_apaar(request):
     if not data:
         return Response({'status': 'error', 'message': 'Invalid APAAR ID'}, status=404)
 
+    # Try to get phone from logged-in user
+    phone = None
+    if request.user.is_authenticated:
+        profile = getattr(request.user, 'profile', None)
+        if profile:
+            phone = profile.phone
+
     ben, _ = Beneficiary.objects.get_or_create(
         apaar_id=apaar_id,
-        defaults={'name': data.get('name', name), 'state': data.get('state', location)}
+        defaults={'name': data.get('name', name), 'state': data.get('state', location), 'phone': phone}
     )
+    
+    # Update phone if not set
+    if phone and not ben.phone:
+        ben.phone = phone
+        ben.save()
 
     heur = {
         'identity_verified': True,

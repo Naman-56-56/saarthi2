@@ -17,10 +17,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from accounts import views as accounts_views
+from dashboard import views as dashboard_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('', TemplateView.as_view(template_name="index.html")),
+    
+    # Home page
+    path('', TemplateView.as_view(template_name="home.html"), name='home'),
+    
+    # Accounts URLs
+    path('signup/', accounts_views.signup, name='signup'),
+    path('verify-otp/', accounts_views.verify_otp, name='verify_otp'),
+    path('logout/', accounts_views.logout_view, name='logout'),
+    
+    # Dashboard URLs
+    path('dashboard/', dashboard_views.dashboard, name='dashboard'),
+    path('dashboard/verify-apaar/', dashboard_views.verify_apaar, name='verify_apaar'),
 ]
+
 
