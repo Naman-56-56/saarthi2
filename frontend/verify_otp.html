@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Verify OTP - SAARTHI{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-box">
+        <h1>Verify OTP</h1>
+        <p class="form-subtitle">Enter the OTP sent to <strong>{{ phone }}</strong></p>
+        
+        <div class="demo-notice">
+            <strong>Demo Mode:</strong> Use OTP: <code>1234</code>
+        </div>
+        
+        <form method="POST" action="{% url 'verify_otp' %}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="otp">Enter OTP</label>
+                <input 
+                    type="text" 
+                    id="otp" 
+                    name="otp" 
+                    placeholder="Enter 4-digit OTP"
+                    pattern="[0-9]{4}"
+                    maxlength="4"
+                    required
+                    class="form-input otp-input"
+                    autocomplete="off"
+                >
+            </div>
+            
+            <button type="submit" class="btn-submit">Verify & Login</button>
+        </form>
+        
+        <div class="form-footer">
+            <a href="{% url 'signup' %}">← Back to phone number</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-focus OTP input
+document.getElementById('otp').focus();
+</script>
+{% endblock %}

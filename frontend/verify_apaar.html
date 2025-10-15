@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Verify APAAR - SAARTHI{% endblock %}
+
+{% block content %}
+<div class="verify-container">
+    <div class="verify-box">
+        <h1>🔍 APAAR ID Verification</h1>
+        <p class="form-subtitle">Verify your identity for welfare scheme eligibility</p>
+        
+        <div class="demo-notice">
+            <strong>Demo:</strong> Use APAAR ID: <code>APAAR123</code> or <code>VALID123</code>
+        </div>
+        
+        <form id="verifyForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="apaar_id">APAAR ID *</label>
+                <input 
+                    type="text" 
+                    id="apaar_id" 
+                    name="apaar_id" 
+                    placeholder="Enter your APAAR ID"
+                    required
+                    class="form-input"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Enter your full name"
+                    required
+                    class="form-input"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="income">Monthly Income (₹) *</label>
+                <input 
+                    type="number" 
+                    id="income" 
+                    name="income" 
+                    placeholder="Enter monthly income"
+                    required
+                    class="form-input"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="education_level">Education Level *</label>
+                <select id="education_level" name="education_level" required class="form-input">
+                    <option value="">Select education level</option>
+                    <option value="No Formal Education">No Formal Education</option>
+                    <option value="Primary School">Primary School</option>
+                    <option value="High School">High School</option>
+                    <option value="Higher Secondary">Higher Secondary</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                    <option value="Graduate">Graduate</option>
+                    <option value="Postgraduate">Postgraduate</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location *</label>
+                <input 
+                    type="text" 
+                    id="location" 
+                    name="location" 
+                    placeholder="City, State"
+                    required
+                    class="form-input"
+                >
+            </div>
+            
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span id="btnText">Verify APAAR ID</span>
+                <span id="btnLoader" class="loader" style="display:none;"></span>
+            </button>
+        </form>
+        
+        <!-- Result Display -->
+        <div id="resultBox" class="result-box" style="display:none;">
+            <h3 id="resultTitle"></h3>
+            <div id="resultContent"></div>
+        </div>
+        
+        <div class="form-footer">
+            <a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/verify.js"></script>
+{% endblock %}

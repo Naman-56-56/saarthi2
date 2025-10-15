@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - SAARTHI{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Welcome to Your Dashboard</h1>
+        {% if profile %}
+            <p class="user-info">Phone: <strong>{{ profile.phone }}</strong></p>
+        {% endif %}
+    </div>
+    
+    <div class="dashboard-cards">
+        <div class="card">
+            <h2>📋 User Information</h2>
+            <div class="card-content">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                {% if profile %}
+                    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+                    <p><strong>Verified:</strong> {% if profile.otp_verified %}✅ Yes{% else %}❌ No{% endif %}</p>
+                    <p><strong>Member Since:</strong> {{ profile.created_at|date:"M d, Y" }}</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🔍 APAAR Verification</h2>
+            <div class="card-content">
+                <p>Verify your APAAR ID to access government welfare schemes</p>
+                <a href="{% url 'verify_apaar' %}" class="btn-primary">Verify APAAR ID</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="verification-history">
+        <h2>📊 Verification History</h2>
+        
+        {% if verification_attempts %}
+        <div class="table-responsive">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>APAAR ID</th>
+                        <th>Name</th>
+                        <th>Trust Score</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for attempt in verification_attempts %}
+                    <tr>
+                        <td>{{ attempt.apaar_id }}</td>
+                        <td>{{ attempt.name|default:"N/A" }}</td>
+                        <td>
+                            <span class="trust-score score-{{ attempt.trust_score|floatformat:0 }}">
+                                {{ attempt.trust_score }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-{{ attempt.status }}">
+                                {{ attempt.status }}
+                            </span>
+                        </td>
+                        <td>{{ attempt.created_at|date:"M d, Y H:i" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>No verification attempts yet</p>
+            <a href="{% url 'verify_apaar' %}" class="btn-secondary">Start Your First Verification</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

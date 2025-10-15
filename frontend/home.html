@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to SAARTHI{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Welcome to SAARTHI</h1>
+        <p class="hero-tagline">
+            Securing Authenticity & Accountability through Robust Technological Healthcare Integration
+        </p>
+        
+        <div class="hero-description">
+            <h2>The Problem</h2>
+            <p>
+                India's welfare schemes suffer from leakages, duplicate beneficiaries, and targeting errors.
+                Traditional paper-based verification is slow, prone to fraud, and lacks transparency.
+            </p>
+            
+            <h2>Our Solution</h2>
+            <p>
+                SAARTHI is a <strong>blockchain-backed digital verification platform</strong> that uses 
+                <strong>APAAR IDs</strong>, <strong>AI-powered trust scoring</strong>, and 
+                <strong>DigiLocker integration</strong> to ensure authentic, tamper-proof beneficiary verification.
+            </p>
+            
+            <h2>Key Features</h2>
+            <ul class="features-list">
+                <li>🔐 <strong>APAAR ID Integration</strong> - Unique digital identity for every citizen</li>
+                <li>🤖 <strong>AI Trust Scoring</strong> - Machine learning models detect fraud patterns</li>
+                <li>⛓️ <strong>Blockchain Verification</strong> - Immutable records prevent tampering</li>
+                <li>📱 <strong>Mobile-First Design</strong> - Works offline for rural field agents</li>
+                <li>🌐 <strong>DigiLocker Integration</strong> - Instant document verification</li>
+            </ul>
+            
+            <h2>Impact</h2>
+            <p>
+                Reduce leakages by up to <strong>40%</strong>, save <strong>₹10,000 crores annually</strong>,
+                and ensure benefits reach genuine beneficiaries faster.
+            </p>
+        </div>
+        
+        <div class="cta-section">
+            <a href="{% url 'signup' %}" class="btn-primary">Get Started - Sign Up Now</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn-secondary">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
